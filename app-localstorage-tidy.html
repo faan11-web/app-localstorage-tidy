@@ -1,0 +1,91 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="app-localstorage-tidy">
+  <template>
+  </template>
+
+  <script>
+    /**
+     *
+     * <app-localstorage-tidy> writes and reads using localStorage api.
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class AppLocalstorageTidy extends Polymer.Element {
+      static get is() { return 'app-localstorage-tidy'; }
+      static get properties() {
+        return {
+          /** The key value  */
+          key: {
+            type: String,
+            notify:true
+          },
+          /** the data that can be read/write */
+          data: {
+            type: Object,
+            notify:true
+          },
+          /** the initial value */
+          defaultValue:{
+            type: Object,
+            notify:true
+          }
+        };
+
+      }
+      static get observers() {
+        return [
+           '_changeData(data.*)',
+           '_changeKey(key)',
+        ];
+      }
+      _changeData(data){
+        /* take the new data */
+        var data = data.base;
+        /* avoid strange cases */
+        if (this.key == null || this.key == undefined){
+          return;
+        }
+        /* First time? use default value */
+        if (data == undefined){
+          this.data = this.defaultValue;
+          return;
+        }
+        /* set default value */
+        window.localStorage.setItem(this.key,JSON.stringify(data));
+      }
+      _changeKey(key){
+        /* avoid strange cases */
+        if (key == null || key == undefined){
+          return;
+        }
+        /* fetch data */
+        try{
+          this.data = JSON.parse(window.localStorage.getItem(key));
+        }catch(e){
+          /*Undefined? take default value. */
+          this.data = this.defaultValue;
+          return;
+        }
+
+
+      }
+      /** Force Data to be read */
+      updateData(){
+        try{
+          /* read data */
+          this.data = JSON.parse(window.localStorage.getItem(this.key));
+        }catch(e){
+          /* Default value */
+          this.data = this.defaultValue;
+          return;
+        }
+
+      }
+    }
+    /* component declaration */
+    window.customElements.define(AppLocalstorageTidy.is, AppLocalstorageTidy);
+  </script>
+</dom-module>

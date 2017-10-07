@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>app-localstorage-tidy demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../app-localstorage-tidy.html">
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+  </head>
+  <body unresolved>
+    <dom-module id="app-localstorage-tidy-demo">
+      <template>
+        <style>
+
+        </style>
+          <app-localstorage-tidy  key="test" data="{{test}}" default-value="{{default}}"></app-localstorage-tidy>
+          <h2 on-click="_changeValue">Test {{test.number}} Click here to increase</h2>
+      </template>
+
+      <script>
+      window.addEventListener('WebComponentsReady', function() {
+        Polymer({
+          is: 'app-localstorage-tidy-demo',
+          properties:{
+            default:{
+              type:Object,
+              value:function(){
+                return {number:8};
+              }
+            },
+            test:{
+              type:Number,
+              notify:true
+            },
+
+          },
+          _changeValue:function(){
+            this.set("test.number",this.test.number + 1);
+          }
+        });
+      })
+    </script>
+  </dom-module>
+  <app-localstorage-tidy-demo></app-localstorage-tidy-demo>
+    <!--<div class="vertical-section-container centered">
+      <h3>Basic app-localstorage-document demo</h3>
+      <demo-snippet>
+        <template>
+
+
+        </template>
+      </demo-snippet>
+    </div>-->
+  </body>
+</html>
