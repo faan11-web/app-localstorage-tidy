@@ -6,7 +6,7 @@ app-localstorage-tidy writes and reads using localStorage api.
 <app-localstorage-tidy
     key="test"
     value="{{test}}"
-    default="{{defaultValue}}">
+    default-value="{{defaultValue}}">
 </app-localstorage-tidy>
 <h2> this test was executed: {{test}} </h2>
 
